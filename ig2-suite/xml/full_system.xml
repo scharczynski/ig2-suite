@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<system a500updaterate="50" xmlns="http://www.ptcusa.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ptcusa.com A510.xsd"
+  type="pyramid">
+  <hosts>
+    <!-- NOTE: the ip address does not matter for bcs, but may be required to be present -->
+    <host ip="192.168.100.135" name="wnett" localhost="true" />
+  </hosts>
+  <loopcontrollers>
+    <loopcontroller type="F460" name="F1" ip="192.168.55.55">
+      <channels>
+        <channel name="r_status" wire="int_in_device_status" />
+        <channel name="r_analog_in_1" wire="analog_in_1" />
+        <channel name="r_analog_in_2" wire="analog_in_2" />
+        <channel name="r_current_in_1" wire="analog_in_current_1" />
+        <channel name="r_current_in_2" wire="analog_in_current_2" />
+        <channel name="r_current_in_3" wire="analog_in_current_3" />
+        <channel name="r_current_in_4" wire="analog_in_current_4" />
+        <channel name="r_channel_in_1" wire="analog_in_channel_1" />
+        <channel name="r_channel_in_2" wire="analog_in_channel_2" />
+        <channel name="r_channel_in_3" wire="analog_in_channel_3" />
+        <channel name="r_channel_in_4" wire="analog_in_channel_4" />
+        <channel name="r_x_pos" wire="analog_in_x_pos" />
+        <channel name="r_y_pos" wire="analog_in_y_pos" />
+        <channel name="r_bias_in" wire="analog_in_bias" />
+        <channel name="r_max_bias" wire="int_in_max_bias" />
+        <channel name="r_process_value" wire="analog_in_process_value" />
+        <channel name="r_process_target" wire="analog_in_process_target" />
+        <channel name="r_variant_in_data" wire="variant_in_data" />
+        <channel name="r_buffered_variant_data" wire="analog[4081]_in_buffered_variant_data" />
+        <channel name="c_initiate" wire="digital_out_initiate" />
+        <channel name="r_range_1" wire="int_out_range_1" />
+        <channel name="r_range_2" wire="int_out_range_2" />
+        <channel name="r_range_3" wire="int_out_range_3" />
+        <channel name="r_range_4" wire="int_out_range_4" />
+        <channel name="r_monitor_out_mode" wire="int_out_monitor" />
+        <channel name="r_analog_out_1" wire="analog_out_1" />
+        <channel name="r_analog_out_2" wire="analog_out_2" />
+        <channel name="r_analog_out_3" wire="analog_out_3" />
+        <channel name="r_analog_out_4" wire="analog_out_4" />
+        <channel name="r_bias_out" wire="analog_out_bias" />
+        <channel name="r_integration_time" wire="analog_out_integration_time" />
+        <channel name="r_dac_low_limit" wire="analog_out_dac_low_limit" />
+        <channel name="r_dac_high_limit" wire="analog_out_dac_high_limit" />
+        <channel name="r_pid_kp" wire="analog_out_kp" />
+        <channel name="r_pid_ki" wire="analog_out_ki" />
+        <channel name="r_low_current_limit" wire="analog_out_low_current_limit" />
+        <channel name="r_reference" wire="analog_out_reference" />
+        <channel name="r_servo_period" wire="int_out_servo_period" />
+        <channel name="r_servo_mode" wire="int_out_servo_mode" />
+        <channel name="r_servo_enable" wire="digital_out_servo_enable" />
+        <channel name="r_register_offset" wire="int_out_register_offset" />
+        <channel name="r_register_contents" wire="int_out_register_contents" />
+        <channel name="r_register_command" wire="digital_out_register_command" />
+        <channel name="r_base_address" wire="int_out_base_address" />
+        <channel name="r_firmware_version" wire="string_in_firmware" />
+        <channel name="r_fpga_version" wire="string_in_fpga" />
+        <channel name="r_serial_number" wire="string_in_serial_num" />
+        <channel name="r_software_rev" wire="string_in_software_rev" />
+        <channel name="r_secondary_fpga_version" wire="string_in_secondary_fpga" />
+        <channel name="r_rpt_revision" wire="string_in_rtp_rev" />
+        <channel name="r_hardware_revision" wire="string_in_hardware_rev" />
+        <channel name="r_position_calculation" wire="int_out_position_calculation" />
+        <channel name="r_buffered_acquisition" wire="digital_out_buffered_acquisition" />
+        <channel name="r_acquisition_mode" wire="int_out_acquisition_mode" />
+        <channel name="r_start_trigger_source" wire="int_out_start_trigger_source" />
+        <channel name="r_pause_trigger_source" wire="int_out_pause_trigger_source" />
+        <channel name="r_stop_trigger_source" wire="int_out_stop_trigger_source" />
+        <channel name="r_bnc_start_gate" wire="int_out_bnc_start_gate" />
+        <channel name="r_stop_count" wire="int_out_stop_count" />
+        <channel name="r_burst_count" wire="int_out_burst_count" />
+        <channel name="r_calibration_source" wire="int_out_calibration_source" />
+        <channel name="r_calibration_channel" wire="int_out_calibration_channel" />
+        <channel name="r_calibration_command" wire="int_out_calibration_command" />
+        <channel name="r_clear_calibrations" wire="digital_out_clear_calibrations" /> 
+        <channel name="r_hvdac_calibration" wire="variant_out_hvdac_calibration" />
+        <channel name="r_hvadc_calibration" wire="variant_out_hvadc_calibration" />
+        <channel name="r_calibration_range_1" wire="variant_out_calibration_range_1" />
+        <channel name="r_calibration_range_2" wire="variant_out_calibration_range_2" />
+        <channel name="r_calibration_range_3" wire="variant_out_calibration_range_3" />
+        <channel name="r_calibration_range_4" wire="variant_out_calibration_range_4" />
+        <channel name="r_analog_input_calibration" wire="variant_out_analoginput_calibration" />
+        <channel name="r_analog_output_calibration" wire="variant_out_analogoutput_calibration" />
+      </channels>
+    </loopcontroller>
+  </loopcontrollers>
+  <interpreter>
+    <devices>
+      <epicscas type="epicscas" name="epicsserver" />
+    </devices>
+  </interpreter>
+</system>

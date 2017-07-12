@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<system a500updaterate="50" xmlns="http://www.ptcusa.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ptcusa.com A510.xsd"
+  type="pyramid">
+  <hosts>
+    <!-- NOTE: the ip address does not matter for bcs, but may be required to be present -->
+    <host ip="192.168.100.135" name="wnett" localhost="true" />
+  </hosts>
+  <loopcontrollers>
+  </loopcontrollers>
+  <interpreter>
+    <devices>
+      <epicscas type="epicscas" name="epicsserver" />
+
+      <memblock type="memblock" name="tcttest" size="20">
+        <channels>
+          <channel name="c_test1" wire="analog_out_1" />
+          <channel name="newtest" wire="analog_out_2" init='75.00' />
+          <channel name="c_test2" wire="analog_out_3" />
+        </channels>
+      </memblock>
+    </devices>
+  </interpreter>
+</system>

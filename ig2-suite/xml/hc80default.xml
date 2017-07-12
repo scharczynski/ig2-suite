@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<system xmlns="http://www.ptcusa.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ptcusa.com A510.xsd"
+  type="pyramid">
+  <version major=1 minor=0/>
+  <properties>
+    <property name="enable_logging" value="true" user="true" />
+    <property name="serial_number" value="hc80_0" />
+  </properties>
+  <hosts>
+    <!-- y = Bx + C, where y=user units, and x=device units -->
+    <!-- NOTE: the ip address has no effect on the system, but is required to be present -->
+    <host ip="192.168.100.131" name="T40client" localhost="true" />
+  </hosts>
+  <loopcontrollers/>
+  <interpreter>
+    <devices>
+      <epicscas type="epicscas" name="epics_server" monitorOnlyChange="true" />
+      <pgram name="pgram" />
+
+      <capemanager type="capemanager" name="capemanager">
+        <properties>
+          <property name="slots_path" value="/sys/devices/platform/bone_capemgr/slots" />
+          <property name="frag_1" value="PTC-PRU" />
+          <property name="frag_2" value="BB-UART5" />
+        </properties>
+      </capemanager>
+
+      <bbbgpio type="bbbgpio" name="BOARD_POWER" pin="P8_7" direction="output" defaultValue="true">
+        <channels>
+          <channel name="c_gpio_P8_7:{serial}" wire="digital_out_1" />
+        </channels>
+      </bbbgpio>
+
+      <pid_controller name="mfc_purge_pid">
+        <channels>
+          <channel name="r_mfc_purge_pid_output:{serial}" wire="analog_in_output" />
+          <channel name="r_mfc_purge_pid_error:{serial}" wire="analog_in_error" />
+          <channel name="c_mfc_purge_pid_setpoint:{serial}" wire="analog_out_setpoint" init="0.0" />
+          <channel name="c_mfc_purge_pid_readback:{serial}" wire="analog_out_readback" init="0.0" />
+          <channel name="c_mfc_purge_pid_output_min:{serial}" wire="analog_out_output_min" init="0.0" />
+          <channel name="c_mfc_purge_pid_output_max:{serial}" wire="analog_out_output_max" init="5.0" />
+          <channel name="c_mfc_purge_pid_kp:{serial}" wire="analog_out_kp" init="75" />
+          <channel name="c_mfc_purge_pid_ki:{serial}" wire="analog_out_ki" init="3" />
+          <channel name="c_mfc_purge_pid_kd:{serial}" wire="analog_out_kd" init="0" />
+        </channels>
+        <pipes>
+          <pipe source="r_helium_controller_pressure:{serial}" wire="analog_out_readback" />
+          <pipe source="r_helium_controller_target_pressure:{serial}" wire="analog_out_setpoint" />
+          <pipe destination="c_helium_controller_mfc_purge_pid_voltage:{serial}" wire="analog_in_output" />
+        </pipes>
+      </pid_controller>
+
+      <pid_controller name="mfc_maintain_pid">
+        <channels>
+          <channel name="r_mfc_maintain_pid_output:{serial}" wire="analog_in_output" />
+          <channel name="r_mfc_maintain_pid_error:{serial}" wire="analog_in_error" />
+          <channel name="c_mfc_maintain_pid_setpoint:{serial}" wire="analog_out_setpoint" init="0.0" />
+          <channel name="c_mfc_maintain_pid_readback:{serial}" wire="analog_out_readback" init="0.0" />
+          <channel name="c_mfc_maintain_pid_output_min:{serial}" wire="analog_out_output_min" init="0.0" />
+          <channel name="c_mfc_maintain_pid_output_max:{serial}" wire="analog_out_output_max" init="5.0" />
+          <channel name="c_mfc_maintain_pid_kp:{serial}" wire="analog_out_kp" init="75" />
+          <channel name="c_mfc_maintain_pid_ki:{serial}" wire="analog_out_ki" init="3" />
+          <channel name="c_mfc_maintain_pid_kd:{serial}" wire="analog_out_kd" init="0" />
+        </channels>
+        <pipes>
+          <pipe source="r_helium_controller_pressure:{serial}" wire="analog_out_readback" />
+          <pipe source="r_helium_controller_target_pressure:{serial}" wire="analog_out_setpoint" />
+          <pipe destination="c_helium_controller_mfc_maintain_pid_voltage:{serial}" wire="analog_in_output" />
+        </pipes>
+      </pid_controller>
+
+      <heliumcontroller name="helium_controller" type="heliumcontroller">
+        <gui home="hc80" />
+        <channels>
+          <channel name="c_helium_controller_enable:{serial}" wire="digital_out_enable" init="true" />
+          <channel name="r_helium_controller_state:{serial}" wire="int_in_state" />
+          <channel name="r_helium_controller_pressure:{serial}" wire="analog_in_pressure" units="psi" />
+          <channel name="r_helium_controller_oxygen_percent:{serial}" wire="analog_in_oxygen_percent" units="%" />
+          <channel name="r_helium_controller_volume_flowed:{serial}" wire="analog_in_volume_flowed" units="ccm" />
+          <channel name="r_helium_controller_time_in_state:{serial}" wire="analog_in_time_in_state" scaleB="0.001" units="s" />
+          <channel name="r_helium_controller_accel_x:{serial}" wire="analog_in_accel_x" units="m/s2" />
+          <channel name="r_helium_controller_angle_x:{serial}" wire="analog_in_angle_x" units="rad" />
+          <channel name="r_helium_controller_accel_y:{serial}" wire="analog_in_accel_y" units="m/s2" />
+          <channel name="r_helium_controller_angle_y:{serial}" wire="analog_in_angle_y" units="rad" />
+          <channel name="r_helium_controller_angle_total:{serial}" wire="analog_in_angle_total" units="rad" />
+          <channel name="r_helium_controller_mfc_purge:{serial}" wire="analog_in_mfc_purge" units="V" />
+          <channel name="c_helium_controller_mfc_purge_pid_voltage:{serial}" wire="analog_out_mfc_purge_pid_voltage" units="V" />
+          <channel name="r_helium_controller_mfc_maintain:{serial}" wire="analog_in_mfc_maintain" units="V" />
+          <channel name="c_helium_controller_mfc_maintain_pid_voltage:{serial}" wire="analog_out_mfc_maintain_pid_voltage" units="V" />
+          <channel name="r_helium_controller_target_pressure:{serial}" wire="analog_in_target_pressure" units="psi" />
+          <channel name="c_helium_controller_oxygen_percent_threshold:{serial}" wire="analog_out_oxygen_percent_threshold" init="1.0" units="%" />
+          <channel name="c_helium_controller_sleep_pressure_threshold:{serial}" wire="analog_out_sleep_pressure_threshold" init="0.07" units="psi" />
+          <channel name="c_helium_controller_interlock_pressure_threshold:{serial}" wire="analog_out_interlock_pressure_threshold" init="0.5" units="psi" />
+          <channel name="c_helium_controller_v1_wait_time:{serial}" wire="int_out_v1_wait_time" init="1000" units="ms" />
+          <channel name="c_helium_controller_init_wait_time:{serial}" wire="int_out_init_wait_time" init="5000" units="ms" />
+          <channel name="c_helium_controller_button_vent:{serial}" wire="digital_out_button_vent" init="false" />
+          <channel name="c_helium_controller_button_operate:{serial}" wire="digital_out_button_operate" init="false" />
+          <channel name="c_helium_controller_button_sleep:{serial}" wire="digital_out_button_sleep" init="false" />
+          <channel name="r_helium_controller_button_operate_led_alias:{serial}" wire="digital_out_button_operate_led" />
+          <channel name="r_helium_controller_button_sleep_led_alias:{serial}" wire="digital_out_button_sleep_led" />
+          <channel name="r_helium_controller_button_vent_led_alias:{serial}" wire="digital_out_button_vent_led" />
+          <channel name="r_helium_controller_tank_max:{serial}" wire="analog_out_tank_max" init="10000" />
+          <channel name="r_helium_controller_tank_percent:{serial}" wire="analog_in_tank_percent" />
+        </channels>
+        <pipes>
+          <pipe source="r_luminox_1_oxygen_percent:{serial}" wire="analog_out_oxygen_percent" />
+          <pipe source="r_m80_accel_x_v:{serial}" wire="analog_out_accel_x" />
+          <pipe source="r_m80_accel_y_v:{serial}" wire="analog_out_accel_y" />
+          <pipe source="r_m80_temperature_v:{serial}" wire="analog_out_temperature" scaleB="0.01" />
+          <pipe source="r_m80_pressure_v:{serial}" wire="analog_out_pressure" />
+          <pipe source="r_m80_5volt_reference:{serial}" wire="analog_out_5volt_reference" />
+          
+          <pipe wire="analog_in_mfc_maintain" destination="c_mfc1_flow:{serial}" />
+          <pipe source="r_m80_mfc1_readback:{serial}" wire="analog_out_mfc_maintain" />
+          <pipe wire="analog_in_mfc_purge" destination="c_mfc2_flow:{serial}" />
+          <pipe source="r_m80_mfc2_readback:{serial}" wire="analog_out_mfc_purge" />
+
+          <pipe source="r_switch1:{serial}" wire="digital_out_switch1" />
+          <pipe source="r_switch2:{serial}" wire="digital_out_switch2" />
+          <pipe source="r_switch3:{serial}" wire="digital_out_switch3" />
+
+          <pipe wire="digital_in_fan" destination="c_gpio_P8_10_fan:{serial}" />
+          <pipe wire="digital_in_v1" destination="c_gpio_P8_14_v1:{serial}" />
+          <pipe wire="digital_in_v2" destination="c_gpio_P8_15_v2:{serial}" />
+          <pipe wire="digital_in_v3" destination="c_gpio_P8_16_v3:{serial}" />
+          <pipe wire="digital_in_v4" destination="c_gpio_P8_17_v4:{serial}" />
+          <pipe wire="digital_in_relay" destination="c_gpio_P8_18_relay:{serial}" />
+
+          <pipe wire="int_in_led_ready" destination="c_led_ready_state:{serial}" />
+          <pipe wire="int_in_led_not_ready" destination="c_led_not_ready_state:{serial}" />
+          <pipe wire="int_in_led_power_interrupted" destination="c_led_power_interrupted_state:{serial}" />
+          <pipe wire="int_in_led_oxygen_detected" destination="c_led_oxygen_detected_state:{serial}" />
+          <pipe wire="int_in_led_chamber_vented" destination="c_led_chamber_vented_state:{serial}" />
+          <pipe wire="int_in_led_remote_sensor" destination="c_led_remote_sensor_state:{serial}" />
+          <pipe wire="int_in_led_chamber_overpressure" destination="c_led_chamber_overpressure_state:{serial}" />
+          <pipe wire="int_in_led_helium_supply_fault" destination="c_led_helium_supply_fault_state:{serial}" />
+
+          <pipe wire="int_in_button_operate_led" destination="c_led_operate_state:{serial}" />
+          <pipe wire="int_in_button_sleep_led" destination="c_led_sleep_state:{serial}" />
+          <pipe wire="int_in_button_vent_led" destination="c_led_vent_state:{serial}" />
+
+          <pipe source="r_button_vent:{serial}" wire="digital_out_button_vent" />
+          <pipe source="r_button_operate:{serial}" wire="digital_out_button_operate" />
+          <pipe source="r_button_sleep:{serial}" wire="digital_out_button_sleep" />
+
+          <pipe source="r_mfc1_interlock_state:{serial}" wire="digital_out_mfc1_interlock" />
+          <pipe source="r_mfc2_interlock_state:{serial}" wire="digital_out_mfc2_interlock" />
+
+          <pipe source="c_button_vent_led:{serial}" wire="digital_out_button_vent_led" />
+          <pipe source="c_button_sleep_led:{serial}" wire="digital_out_button_sleep_led" />
+          <pipe source="c_button_operate_led:{serial}" wire="digital_out_button_operate_led" />
+
+        </pipes>
+      </heliumcontroller>
+
+      <m80base type="m80base" name="m80" serviceTimerMilliseconds="100">
+        <channels>
+          <channel name="r_m80_accel_x_v:{serial}" wire="analog_in_3" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+          <channel name="r_m80_accel_y_v:{serial}" wire="analog_in_1" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+          <channel name="r_m80_pressure_v:{serial}" wire="analog_in_7" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+          <channel name="r_m80_temperature_v:{serial}" wire="analog_in_2" scaleB="3.67e-04" scaleC="5.05e-03" units="C" />
+
+          <channel name="r_m80_5volt_reference:{serial}" wire="analog_in_5" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+          <channel name="r_m80_adc_6:{serial}" wire="analog_in_6" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+          <channel name="r_m80_mfc1_readback:{serial}" wire="analog_in_11" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+          <channel name="r_m80_mfc2_readback:{serial}" wire="analog_in_9" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+
+          <channel name="r_m80_adc_9:{serial}" wire="analog_in_10" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+          <channel name="r_m80_adc_10:{serial}" wire="analog_in_15" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+          <channel name="r_m80_adc_11:{serial}" wire="analog_in_14" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+          <channel name="r_m80_adc_12:{serial}" wire="analog_in_13" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+
+          <channel name="r_m80_adc_13:{serial}" wire="analog_in_4" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+          <channel name="r_m80_adc_14:{serial}" wire="analog_in_8" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+          <channel name="r_m80_adc_15:{serial}" wire="analog_in_12" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+          <channel name="r_m80_adc_16:{serial}" wire="analog_in_16" scaleB="3.67e-04" scaleC="5.05e-03" units="V" />
+
+          <channel name="c_mfc1_flow:{serial}" wire="analog_out_5" scaleB="3.06e-04" scaleC="7.58e-03" units="V" />
+          <channel name="c_mfc2_flow:{serial}" wire="analog_out_6" scaleB="3.06e-04" scaleC="7.58e-03" units="V" />
+          <channel name="c_m80_dac_3:{serial}" wire="analog_out_7" scaleB="3.06e-04" scaleC="7.58e-03" units="V" />
+          <channel name="c_m80_dac_4:{serial}" wire="analog_out_8" scaleB="3.06e-04" scaleC="7.58e-03" units="V" />
+
+          <channel name="c_m80_dac_5:{serial}" wire="analog_out_1" scaleB="3.06e-04" scaleC="7.58e-03" units="V" />
+          <channel name="c_m80_dac_6:{serial}" wire="analog_out_2" scaleB="3.06e-04" scaleC="7.58e-03" units="V" />
+          <channel name="c_m80_dac_7:{serial}" wire="analog_out_3" scaleB="3.06e-04" scaleC="7.58e-03" units="V" />
+          <channel name="c_m80_dac_8:{serial}" wire="analog_out_4" scaleB="3.06e-04" scaleC="7.58e-03" units="V" />
+
+        </channels>
+      </m80base>
+
+      <template name="gpio">
+        <bbbgpio type="bbbgpio" name="GPIO_{pin}_{name}" pin="{pin}" direction="output" defaultValue="false">
+          <channels>
+            <channel name="c_gpio_{pin}_{name}:{serial}" wire="digital_out_1" />
+          </channels>
+        </bbbgpio>
+      </template>
+
+      <instance template="gpio" pin="P9_11" name="PRU0_DEBUG" />
+      <instance template="gpio" pin="P9_13" name="PRU1_DEBUG" />
+      <instance template="gpio" pin="P9_15" name="DAC_LDAC" />
+      <instance template="gpio" pin="P9_23" name="ADC_RESET" />
+
+      <instance template="gpio" pin="P8_10" name="fan" />
+      <instance template="gpio" pin="P8_13" name="" />
+      <instance template="gpio" pin="P8_14" name="v1" />
+      <instance template="gpio" pin="P8_15" name="v2" />
+      <instance template="gpio" pin="P8_16" name="v3" />
+      <instance template="gpio" pin="P8_17" name="v4" />
+      <instance template="gpio" pin="P8_18" name="relay" />
+      <instance template="gpio" pin="P8_19" name="" />
+
+
+      <pcf8574bus type="pcf8574bus" name="pcf8574bus1" device="/dev/i2c-2" pollingPeriod="50">
+        <pcf8574s>
+          <pcf8574 type="pcf8574" name="digital_ins_1" address="33" defaultValue="255">
+            <channels>
+              <channel name="r_switch1:{serial}" wire="digital_in_1" />
+              <channel name="r_switch2:{serial}" wire="digital_in_2" />
+              <channel name="r_switch3:{serial}" wire="digital_in_3" />
+              <channel name="r_button_vent:{serial}" wire="digital_in_4" />
+              <channel name="r_button_sleep:{serial}" wire="digital_in_5" />
+              <channel name="r_button_operate:{serial}" wire="digital_in_6" />
+              <channel name="r_digital_ins_1_7:{serial}" wire="digital_in_7" />
+              <channel name="r_digital_ins_1_8:{serial}" wire="digital_in_8" />
+            </channels>
+          </pcf8574>
+
+          <pcf8574 type="pcf8574" name="digital_ins_2" address="34" defaultValue="255">
+            <channels>
+              <channel name="r_digital_ins_2_9:{serial}" wire="digital_in_1" />
+              <channel name="r_digital_ins_2_10:{serial}" wire="digital_in_2" />
+              <channel name="r_digital_ins_2_11:{serial}" wire="digital_in_3" />
+              <channel name="r_digital_ins_2_12:{serial}" wire="digital_in_4" />
+              <channel name="r_digital_ins_2_13:{serial}" wire="digital_in_5" />
+              <channel name="r_digital_ins_2_14:{serial}" wire="digital_in_6" />
+              <channel name="r_digital_ins_2_15:{serial}" wire="digital_in_7" />
+              <channel name="r_digital_ins_2_16:{serial}" wire="digital_in_8" />
+            </channels>
+          </pcf8574>
+
+          <pcf8574 type="pcf8574" name="digital_outs_1" address="35" defaultValue="0">
+            <channels>
+              <channel name="c_digital_outs_1_1:{serial}" wire="digital_out_1" />
+              <channel name="c_digital_outs_1_2:{serial}" wire="digital_out_2" />
+              <channel name="c_button_operate_clear:{serial}" wire="digital_out_3" init="true" />
+              <channel name="c_button_sleep_clear:{serial}" wire="digital_out_4" init="true" />
+              <channel name="c_button_vent_clear:{serial}" wire="digital_out_5" init="true" />
+              <channel name="c_button_operate_led:{serial}" wire="digital_out_6" />
+              <channel name="c_button_sleep_led:{serial}" wire="digital_out_7" />
+              <channel name="c_button_vent_led:{serial}" wire="digital_out_8" />
+            </channels>
+          </pcf8574>
+
+          <pcf8574 type="pcf8574" name="status_display" address="36" defaultValue="0">
+            <gui home="hc80status" />
+            <channels>
+              <channel name="c_led_ready:{serial}" wire="digital_out_1" />
+              <channel name="c_led_not_ready:{serial}" wire="digital_out_2" />
+              <channel name="c_led_power_interrupted:{serial}" wire="digital_out_3" />
+              <channel name="c_led_oxygen_detected:{serial}" wire="digital_out_4" />
+              <channel name="c_led_chamber_vented:{serial}" wire="digital_out_5" />
+              <channel name="c_led_remote_sensor:{serial}" wire="digital_out_6" />
+              <channel name="c_led_chamber_overpressure:{serial}" wire="digital_out_7" />
+              <channel name="c_led_helium_supply_fault:{serial}" wire="digital_out_8" />
+            </channels>
+          </pcf8574>
+
+          <pcf8574 type="pcf8574" name="transceiver" address="37" defaultValue="143">
+            <channels>
+              <channel name="c_transceiver_1:{serial}" wire="digital_out_1" />
+              <channel name="c_transceiver_2:{serial}" wire="digital_out_2" />
+              <channel name="c_transceiver_3:{serial}" wire="digital_out_3" />
+              <channel name="c_transceiver_4:{serial}" wire="digital_out_4" />
+              <channel name="c_transceiver_5:{serial}" wire="digital_out_5" />
+              <channel name="c_transceiver_6:{serial}" wire="digital_out_6" />
+              <channel name="c_transceiver_7:{serial}" wire="digital_out_7" />
+              <channel name="c_transceiver_8:{serial}" wire="digital_out_8" />
+            </channels>
+          </pcf8574>
+
+          <pcf8574 type="pcf8574" name="miscellaneous" address="38" defaultValue="255">
+            <channels>
+              <channel name="c_miscellaneous_led:{serial}" wire="digital_out_1" />
+              <channel name="c_miscellaneous_power:{serial}" wire="digital_out_2" />
+              <channel name="c_miscellaneous_3:{serial}" wire="digital_out_3" />
+              <channel name="c_miscellaneous_4:{serial}" wire="digital_out_4" />
+              <channel name="c_miscellaneous_5:{serial}" wire="digital_out_5" />
+              <channel name="c_miscellaneous_6:{serial}" wire="digital_out_6" />
+              <channel name="c_miscellaneous_7:{serial}" wire="digital_out_7" />
+              <channel name="c_miscellaneous_8:{serial}" wire="digital_out_8" />
+            </channels>
+          </pcf8574>
+        </pcf8574s>
+      </pcf8574bus>
+
+      <serial type="serial" name="serial_uart5">
+        <properties>
+          <property name="device" value="/dev/ttyO5" />
+          <property name="baud_rate" value="9600" />
+          <property name="poll_rate" value="1000" />
+          <property name="read_match" value="(.*)\r\n" />
+        </properties>
+        <channels>
+          <channel name="r_serial_uart5_message:{serial}" wire="string_in_1" />
+          <channel name="c_serial_uart5_command:{serial}" wire="string_out_1" />
+        </channels>
+      </serial>
+
+      <luminox type="luminox" name="luminox_1">
+        <channels>
+          <channel name="r_luminox_1_partial_pressure_oxygen:{serial}" wire="analog_in_partial_pressure" units="ppO2" />
+          <channel name="r_luminox_1_temperature:{serial}" wire="analog_in_temperature" units="C" />
+          <channel name="r_luminox_1_pressure:{serial}" wire="analog_in_pressure" units="mBar" />
+          <channel name="r_luminox_1_oxygen_percent:{serial}" wire="analog_in_percent" units="%" />
+        </channels>
+        <pipes>
+          <pipe source="r_serial_uart5_message:{serial}" wire="string_out_message" />
+        </pipes>
+      </luminox>
+
+      <interlock_tolerance name="mfc1_interlock" type="interlock_tolerance" tags="interlock">
+        <channels>
+          <channel name="r_mfc1_interlock_state:{serial}" wire="digital_in_interlock_state" />
+          <channel name="r_mfc1_interlock_input:{serial}" wire="analog_out_input" />
+          <channel name="r_mfc1_interlock_output:{serial}" wire="analog_out_output" />
+          <channel name="c_mfc1_interlock_enable:{serial}" wire="digital_out_interlock_enable" init="true" />
+          <channel name="c_mfc1_interlock_percent:{serial}" wire="analog_out_percent" init="0.07" />
+          <channel name="c_mfc1_interlock_timeout:{serial}" wire="analog_out_timeout" init="10000" />
+          <channel name="c_mfc1_interlock_max_output:{serial}" wire="analog_out_max_output" init="5" />
+        </channels>
+        <pipes>
+          <pipe source="r_m80_mfc1_readback:{serial}" wire="analog_out_input" />
+          <pipe source="r_helium_controller_mfc_maintain:{serial}" wire="analog_out_output" />
+        </pipes>
+      </interlock_tolerance>
+
+      <interlock_tolerance name="mfc2_interlock" type="interlock_tolerance" tags="interlock">
+        <channels>
+          <channel name="r_mfc2_interlock_state:{serial}" wire="digital_in_interlock_state" />
+          <channel name="r_mfc2_interlock_input:{serial}" wire="analog_out_input" />
+          <channel name="r_mfc2_interlock_output:{serial}" wire="analog_out_output" />
+          <channel name="c_mfc2_interlock_enable:{serial}" wire="digital_out_interlock_enable" init="true" />
+          <channel name="c_mfc2_interlock_percent:{serial}" wire="analog_out_percent" init="0.07" />
+          <channel name="c_mfc2_interlock_timeout:{serial}" wire="analog_out_timeout" init="10000" />
+          <channel name="c_mfc2_interlock_max_output:{serial}" wire="analog_out_max_output" init="5" />
+        </channels>
+        <pipes>
+          <pipe source="r_m80_mfc2_readback:{serial}" wire="analog_out_input" />
+          <pipe source="r_helium_controller_mfc_purge:{serial}" wire="analog_out_output" />
+        </pipes>
+      </interlock_tolerance>
+
+      <template name="led">
+        <led name="led_{name}" type="led">
+          <channels>
+            <channel name="c_led_{name}_state:{serial}" wire="int_out_state" init="0" />
+            <channel name="c_led_{name}_min_state_time:{serial}" wire="int_out_min_state_time" init="0" />
+            <channel name="c_led_{name}_blink_time:{serial}" wire="int_out_blink_time" init="200" />
+          </channels>
+          <pipe wire="digital_in_on" destination="{destination}" />
+        </led>
+      </template>
+
+      <instance template="led" name="operate" destination="c_button_operate_led:{serial}"/>
+      <instance template="led" name="sleep" destination="c_button_sleep_led:{serial}"/>
+      <instance template="led" name="vent" destination="c_button_vent_led:{serial}"/>
+      <instance template="led" name="ready" destination="c_led_ready:{serial}"/>
+      <instance template="led" name="not_ready" destination="c_led_not_ready:{serial}"/>
+      <instance template="led" name="power_interrupted" destination="c_led_power_interrupted:{serial}"/>
+      <instance template="led" name="oxygen_detected" destination="c_led_oxygen_detected:{serial}"/>
+      <instance template="led" name="chamber_vented" destination="c_led_chamber_vented:{serial}"/>
+      <instance template="led" name="remote_sensor" destination="c_led_remote_sensor:{serial}"/>
+      <instance template="led" name="chamber_overpressure" destination="c_led_chamber_overpressure:{serial}"/>
+      <instance template="led" name="helium_supply_fault" destination="c_led_helium_supply_fault:{serial}"/>
+
+    </devices>
+  </interpreter>
+</system>

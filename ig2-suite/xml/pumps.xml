@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<system 
+	xmlns="http://www.ptcusa.com" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ptcusa.com A510.xsd" type="pyramid">
+	<version major=1 minor=0/>
+	<properties>
+		<property name="enable_logging" value="true" user="true" />
+		<property name="serial_number" value="hc80_0" />
+	</properties>
+	<hosts>
+		<!-- y = Bx + C, where y=user units, and x=device units -->
+		<!-- NOTE: the ip address has no effect on the system, but is required to be present -->
+		<host ip="192.168.100.131" name="T40client" localhost="true" />
+	</hosts>
+	<loopcontrollers/>
+	<interpreter>
+		<devices>
+			<epicscas type="epicscas" name="epics_server" monitorOnlyChange="true" />
+			<pump_turbo name="p0" type="pump_turbo" tags="vacuum pump">
+				<channels>
+					<channel name="c_p0_command" wire="digital_out_command" init="false"/>
+					<channel name="r_p0_state" wire="analog_in_state"/>
+					<channel name="r_p0_on_off" wire="digital_in_on_off" />
+					<channel name="c_p0_on_off" wire="digital_out_on_off" />
+					<channel name="c_p0_normal" wire="digital_out_normal"/>
+					<channel name="c_p0_faulted" wire="digital_out_faulted" />
+					<channel name="c_p0_freq" wire="analog_out_frequency" />
+				</channels>
+			</pump_turbo>
+			<pump_rough name="p1" type="pump_rough" tags="vacuum pump">
+				<channels>
+					<channel name="c_p1_command" wire="digital_out_command" init="false"/>
+					<channel name="r_p1_state" wire="analog_in_state"/>
+					<channel name="r_p1_on_off" wire="digital_in_on_off" />
+					<channel name="c_p1_on_off" wire="digital_out_on_off" />
+					<channel name="c_p1_normal" wire="digital_out_normal"/>
+					<channel name="c_p1_faulted" wire="digital_out_faulted" />
+					<channel name="c_p1_freq" wire="analog_out_frequency" />
+				</channels>
+			</pump_rough>
+		</devices>
+	</interpreter>
+</system>

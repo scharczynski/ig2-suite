@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<system a500updaterate="50" xmlns="http://www.ptcusa.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ptcusa.com A510.xsd"
+  type="pyramid">
+  <hosts>
+    <!-- NOTE: the ip address does not matter for bcs, but may be required to be present -->
+    <host ip="192.168.100.138" name="wnett" localhost="true" />
+  </hosts>
+  <loopcontrollers>
+    <loopcontroller type="C400" name="C1" ip="192.168.55.41">   
+      <channels>
+        <channel name="initiate" wire="digital_out_initiate" />
+        <channel name="running_state" wire="digital_in_running" />
+        <channel name="paused_state" wire="digital_in_paused" />
+        <channel name="stopped_state" wire="digital_in_stopped" />
+        <channel name="in_counts_1" wire="int_in_counts_1" />
+        <channel name="in_counts_2" wire="int_in_counts_2" />
+        <channel name="in_counts_3" wire="int_in_counts_3" aMax="50"/>
+     <!--   <channel name="in_3_unbuff" wire="int_in_counts_3" aMax="25"/> -->
+        <channel name="in_counts_4" wire="int_in_counts_4" />
+        <channel name="analog_in_rate_1" wire="analog_in_rate_1" />
+        <channel name="analog_in_rate_2" wire="analog_in_rate_2" />
+        <channel name="analog_in_rate_3" wire="analog_in_rate_3" />
+        <channel name="analog_in_rate_4" wire="analog_in_rate_4" />
+        <channel name="analog_in_bias_1" wire="analog_in_bias_1" />
+        <channel name="analog_in_bias_2" wire="analog_in_bias_2" />
+        <channel name="analog_in_bias_3" wire="analog_in_bias_3" />
+        <channel name="analog_in_bias_4" wire="analog_in_bias_4" />
+        <channel name="digital_out_polarity_1" wire="digital_out_polarity_1" />
+        <channel name="digital_out_polarity_2" wire="digital_out_polarity_2" />
+        <channel name="digital_out_polarity_3" wire="digital_out_polarity_3" />
+        <channel name="digital_out_polarity_4" wire="digital_out_polarity_4" />
+        <channel name="digital_out_pulse_enable_1" wire="digital_out_pulse_enable_1" />        
+        <channel name="digital_out_pulse_enable_2" wire="digital_out_pulse_enable_2" />
+        <channel name="digital_out_pulse_enable_3" wire="digital_out_pulse_enable_3" />
+        <channel name="digital_out_pulse_enable_4" wire="digital_out_pulse_enable_4" />
+        <channel name="accum_mode" wire="int_out_accum_mode" />
+        <channel name="trig_buffer" wire="int_out_trig_buf" />
+        <channel name="trig_burst" wire="int_out_trig_bur" />
+        <channel name="trig_mode" wire="int_out_trig_mode" />
+        <channel name="trig_source_start" wire="int_out_trig_source_start" />
+        <channel name="trig_source_stop" wire="int_out_trig_source_stop" />
+        <channel name="trig_source_pause" wire="int_out_trig_source_pause" />
+        <channel name="pulse_period" wire="int_out_pulse_period" />
+        <channel name="pulse_width" wire="int_out_pulse_width" />
+        <channel name="low_limit_1" wire="analog_out_low_limit_1" />
+        <channel name="low_limit_2" wire="analog_out_low_limit_2" />
+        <channel name="low_limit_3" wire="analog_out_low_limit_3" />
+        <channel name="low_limit_4" wire="analog_out_low_limit_4" />        
+        <channel name="high_limit_1" wire="analog_out_high_limit_1" />
+        <channel name="high_limit_2" wire="analog_out_high_limit_2" />
+        <channel name="high_limit_3" wire="analog_out_high_limit_3" />
+        <channel name="high_limit_4" wire="analog_out_high_limit_4" />        
+        <channel name="analog_out_bias_1" wire="analog_out_bias_1" />
+        <channel name="analog_out_bias_2" wire="analog_out_bias_2" />
+        <channel name="analog_out_bias_3" wire="analog_out_bias_3" />
+        <channel name="analog_out_bias_4" wire="analog_out_bias_4" />        
+        <channel name="analog_out_period" wire="analog_out_period" />
+      </channels>
+    </loopcontroller>
+  </loopcontrollers>
+  <interpreter>
+    <devices>
+      <epicscas type="epicscas" name="epicsserver" />
+    </devices>
+  </interpreter>
+</system>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<system a500updaterate="50" xmlns="http://www.ptcusa.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ptcusa.com A510.xsd"
+  type="pyramid">
+  <hosts>
+    <!-- NOTE: the ip address does not matter for bcs, but may be required to be present -->
+    <host ip="192.168.100.138" name="wnett" localhost="true" />
+  </hosts>
+  <loopcontrollers>
+    <loopcontroller type="A560" name="A1" ip="192.168.55.125">
+      <loops>
+        <!-- A1:LOOP1 ************************************************************************************************************** -->
+        <loop number="5" name="SourceBox">
+          <boards>
+            <board type="M40" name="testm40" address="3">
+              <channels>
+                <channel name="status" wire="int_in_device_state" />
+                <channel name="initiate" wire="digital_out_initiate" />
+                <channel name="outStopCount" wire="int_out_stop_count" />
+                <channel name="analogIn1" wire="analog_in_1"/>
+                <channel name="analogIn2" wire="analog_in_2"/>
+                <channel name="analogIn3" wire="analog_in_3"/>
+                <channel name="analogIn4" wire="analog_in_4"/>
+                <channel name="analogIn5" wire="analog_in_5"/>
+                <channel name="analogIn6" wire="analog_in_6"/>
+                <channel name="analogIn7" wire="analog_in_7"/>
+                <channel name="analogIn8" wire="analog_in_8"/>
+                <channel name="analogOut1" wire="analog_out_1" />
+                <channel name="analogOut2" wire="analog_out_2" />
+                <channel name="analogOut3" wire="analog_out_3" />
+                <channel name="analogOut4" wire="analog_out_4" />
+                <channel name="analogOut5" wire="analog_out_5" />
+                <channel name="analogOut6" wire="analog_out_6" />
+                <channel name="analogOut7" wire="analog_out_7" />
+                <channel name="analogOut8" wire="analog_out_8" />
+                <channel name="digitalIn1" wire="digital_in_1" />
+                <channel name="digitalIn2" wire="digital_in_2" />
+                <channel name="digitalIn3" wire="digital_in_3" />
+                <channel name="digitalIn4" wire="digital_in_4" />
+                <channel name="digitalIn5" wire="digital_in_5" />
+                <channel name="digitalIn6" wire="digital_in_6" />
+                <channel name="digitalIn7" wire="digital_in_7" />
+                <channel name="digitalIn8" wire="digital_in_8" />
+                <channel name="digitalOut1" wire="digital_out_1" />
+                <channel name="digitalOut2" wire="digital_out_2" />
+                <channel name="digitalOut3" wire="digital_out_3" />
+                <channel name="digitalOut4" wire="digital_out_4" />
+                <channel name="digitalOut5" wire="digital_out_5" />
+                <channel name="digitalOut6" wire="digital_out_6" />
+                <channel name="digitalOut7" wire="digital_out_7" />
+                <channel name="digitalOut8" wire="digital_out_8" />                
+              </channels>
+            </board>
+          </boards>
+        </loop>
+      </loops>
+    </loopcontroller>
+  </loopcontrollers>
+  <interpreter>
+    <devices>
+      <epicscas type="epicscas" name="epicsserver" />
+    </devices>
+  </interpreter>
+</system>

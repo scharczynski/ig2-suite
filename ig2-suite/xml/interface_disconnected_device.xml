@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<system a500updaterate="50" xmlns="http://www.ptcusa.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ptcusa.com A510.xsd"
+  type="pyramid">
+  <hosts>
+    <!-- NOTE: the ip address does not matter for bcs, but may be required to be present -->
+    <host ip="192.168.100.135" name="wnett" localhost="true" />
+  </hosts>
+  <loopcontrollers>
+    <loopcontroller type="A500" name="loop1" ip="192.168.100.111" port="100" updatePort="55701" retry="2" timeout="1000" updateRate="50">
+      <loops>
+        <!-- A1:LOOP1 ************************************************************************************************************** -->
+        <loop number="1" name="SourceBox">
+          <boards>
+            <board type="M40" name="slave1" address="1">
+              <channels>
+                <channel name="test1" wire="analog_in_1" scaleB="14" units="A" />
+              </channels>
+            </board>
+          </boards>
+        </loop>
+      </loops>
+    </loopcontroller>
+     <loopcontroller type="A500" name="loop2" ip="192.168.31.131" port="100" updatePort="55701" retry="2" timeout="1000" updateRate="50">
+      <loops>
+        <!-- A1:LOOP1 ************************************************************************************************************** -->
+        <loop number="1" name="SourceBox">
+          <boards>
+            <board type="M40" name="slave2" address="1">
+              <channels>
+                <channel name="test2" wire="analog_in_2" scaleB="14" units="A" />
+              </channels>
+            </board>
+          </boards>
+        </loop>
+      </loops>
+    </loopcontroller>
+    <loopcontroller type="A500" name="loop3" ip="192.168.31.134" port="100" updatePort="55701" retry="2" timeout="1000" updateRate="50">
+      <loops>
+        <!-- A1:LOOP1 ************************************************************************************************************** -->
+        <loop number="1" name="SourceBox">
+          <boards>
+            <board type="M10" name="slave3" address="1">
+              <channels>
+                <channel name="test3" wire="analog_in_2" scaleB="14" units="A" />
+              </channels>
+            </board>
+          </boards>
+        </loop>
+      </loops>
+    </loopcontroller>
+    <loopcontroller type="A500" name="loop4" ip="192.168.31.180" port="100" updatePort="55701" retry="2" timeout="1000" updateRate="50">
+      <loops>
+        <!-- A1:LOOP1 ************************************************************************************************************** -->
+        <loop number="1" name="SourceBox">
+          <boards>
+            <board type="M40" name="slave4" address="3">
+              <channels>
+                <channel name="test4" wire="analog_in_2" scaleB="14" units="A" />
+              </channels>
+            </board>
+          </boards>
+        </loop>
+      </loops>
+    </loopcontroller>   
+  </loopcontrollers>
+  <interpreter>
+    <devices>
+      <epicscas type="epicscas" name="epicsserver" />
+
+    </devices>
+  </interpreter>
+</system>

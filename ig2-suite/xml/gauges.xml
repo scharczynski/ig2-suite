@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<system xmlns="http://www.ptcusa.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ptcusa.com A510.xsd"
+  type="pyramid">
+  <version major=1 minor=0/>
+  <properties>
+    <property name="enable_logging" value="true" user="true" />
+    <property name="serial_number" value="hc80_0" />
+  </properties>
+  <hosts>
+    <!-- y = Bx + C, where y=user units, and x=device units -->
+    <!-- NOTE: the ip address has no effect on the system, but is required to be present -->
+    <host ip="192.168.100.131" name="T40client" localhost="true" />
+  </hosts>
+  <loopcontrollers/>
+  <interpreter>
+    <devices>
+      <epicscas type="epicscas" name="epics_server" monitorOnlyChange="true" />
+
+        <gauge_wrg name="g0" type="gauge_wrg" tags="vacuum gauge">
+		  <channels>
+		    <channel name="r_g0_state" wire="analog_in_state" units="torr"/>
+            <channel name="g0_pressure" wire="analog_out_pressure" />
+		  </channels>
+        </gauge_wrg>
+        <gauge_cluster name="g1" type="gauge_cluster" tags="vacuum gauge">
+		  <channels>
+		    <channel name="r_g1_state" wire="analog_in_state" units="psi"/>
+            <channel name="g1_pressure" wire="analog_out_pressure" />
+		  </channels>
+		</gauge_cluster>
+        <gauge_pirani name="g2" type="gauge_pirani" tags="vacuum gauge">
+          <channels>
+            <channel name="r_g2_state" wire="analog_in_state" units="torr"/>
+            <channel name="g2_pressure" wire="analog_out_pressure" />
+          </channels>
+		</gauge_pirani>
+    </devices>
+  </interpreter>
+</system>

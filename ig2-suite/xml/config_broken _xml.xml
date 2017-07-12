@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<system a500updaterate="50" xmlns="http://www.ptcusa.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ptcusa.com A510.xsd"
+  type="pyramid">
+  <hosts>
+    <!-- NOTE: the ip address does not matter for bcs, but may be required to be present -->
+    <host ip="192.168.100.135" name="wnett" localhost="true" />
+  </hosts>
+  <interpreter>
+    <devices>
+      <epicscas type="epicscas" name="epicsserver" />
+
+      <memblock type="memblock" name="tcttest" size="20">
+        <channels>
+          <channel name="c_PickupPlateInterlockThreshold" wire="analog_out_1" />
+          <channel name="c_PickupPlateInterlockTimeout" wire="analog_out_2" />
+          <channel name="c_AccelSuppressionInterlockThreshold" wire="analog_out_3" />
+          <channel name="c_AccelSuppressionInterlockTimeout" wire="analog_out_4" />
+          <channel name="c_ExtractionSuppressionInterlockThreshold" wire="analog_out_5" />
+          <channel name="c_ExtractionSuppressionInterlockTimeout" wire="analog_out_6" />
+          <channel name="c_SourceInterlockPercent" wire="analog_out_7" />
+          <channel name="c_SourceInterlockTimeout" wire="analog_out_8" />
+          <channel name="c_QuadInterlockPercent" wire="analog_out_9" />
+          <channel name="c_QuadInterlockTimeout" wire="analog_out_10" />
+          <channel name="c_AmagInterlockPercent" wire="analog_out_11" />
+          <channel name="c_AmagInterlockTimeout" wire="analog_out_12" />
+          <channel name="c_DosimetryMode" wire="digital_out_13" />
+          <channel name="r_F100Current" wire="analog_in_14" />
+          <channel name="c_nolog" wire="digital_out_15" />
+          <channel name="r_DoseCurrent" wire="analog_in_16" />
+          <channel name="c_f3200_initiate" wire="digital_out_17" />
+        </channels>
+      </memblock>
+  
+  </interpreter>
+</system>

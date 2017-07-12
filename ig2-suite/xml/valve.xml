@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<system a500updaterate="50" xmlns="http://www.ptcusa.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ptcusa.com A510.xsd"
+  type="pyramid">
+  <hosts>
+    <!-- NOTE: the ip address does not matter for bcs, but may be required to be present -->
+    <host ip="192.168.100.135" name="wnett" localhost="true" />
+  </hosts>
+  <loopcontrollers>
+  </loopcontrollers>
+  <interpreter>
+    <devices>
+      <epicscas type="epicscas" name="epicsserver" />
+      <valve_2c2r name="v0" type="valve_2c2r" tags="vacuum valve">
+        <channels>
+          <channel name="c_command" wire="digital_out_command" init="false"/>
+          <channel name="r_state" wire="analog_in_state"/>
+          <channel name="c_open" wire="digital_out_open" />
+          <channel name="c_close" wire="digital_out_close" />
+          <channel name="c_opened" wire="digital_out_opened" />
+          <channel name="c_closed" wire="digital_out_closed" />
+          <channel name="r_open" wire="digital_in_open" />
+          <channel name="r_close" wire="digital_in_close" />
+
+        </channels>
+      </valve_2c2r>
+      <valve_1c name="v1" type="valve_1c" tags="vacuum valve">
+        <channels>
+          <channel name="c_v1_command" wire="digital_out_command" init="false"/>
+          <channel name="r_v1_state" wire="analog_in_state"/>
+          <channel name="c_v1_open_close" wire="digital_out_open_close" />
+          <channel name="r_v1_open_close" wire="digital_in_open_close" />
+
+        </channels>
+      </valve_1c>
+      <valve_1c2r name="v2" type="valve_1c2r" tags="vacuum valve">
+        <channels>
+          <channel name="c_v2_command" wire="digital_out_command" init="false"/>
+          <channel name="r_v2_state" wire="analog_in_state"/>
+          <channel name="c_v2_open_close" wire="digital_out_open_close" />
+          <channel name="r_v2_open_close" wire="digital_in_open_close" />
+          <channel name="c_v2_opened" wire="digital_out_opened" />
+          <channel name="c_v2_closed" wire="digital_out_closed" />
+
+        </channels>
+      </valve_1c2r>
+      <valve_2r name="v3" type="valve_2r" tags="vacuum valve">
+        <channels>
+          <channel name="c_v3_command" wire="digital_out_command" init="false"/>
+          <channel name="r_v3_state" wire="analog_in_state"/>
+          <channel name="c_v3_opened" wire="digital_out_opened" />
+          <channel name="c_v3_closed" wire="digital_out_closed" />
+
+
+        </channels>
+      </valve_2r>
+
+    </devices>
+  </interpreter>
+</system>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<system 
+	xmlns="http://www.ptcusa.com" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ptcusa.com A510.xsd" type="pyramid">
+	<version major=1 minor=0/>
+	<properties>
+		<property name="enable_logging" value="true" user="true" />
+		<property name="serial_number" value="hc80_0" />
+	</properties>
+	<hosts>
+		<!-- y = Bx + C, where y=user units, and x=device units -->
+		<!-- NOTE: the ip address has no effect on the system, but is required to be present -->
+		<host ip="192.168.100.131" name="T40client" localhost="true" />
+	</hosts>
+	<loopcontrollers/>
+</system>

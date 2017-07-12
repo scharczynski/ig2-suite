@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<system a500updaterate="50" xmlns="http://www.ptcusa.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ptcusa.com A510.xsd"
+  type="pyramid">
+  <hosts>
+    <!-- NOTE: the ip address does not matter for bcs, but may be required to be present -->
+    <host ip="192.168.100.138" name="wnett" localhost="true" />
+  </hosts>
+  <loopcontrollers>
+    <loopcontroller type="A560" name="A1" ip="192.168.55.125">
+      <loops>
+        <!-- A1:LOOP1 ************************************************************************************************************** -->
+        <loop number="7" name="SourceBox">
+          <boards>
+            <board type="M10" name="M10_TEST" address="2">
+              <channels>
+                <channel name="status" wire="int_in_device_state" />
+                <channel name="initiate" wire="digital_out_initiate" />
+                <channel name="outStopCount" wire="int_out_stop_count" />
+                <channel name="cleanIn1" wire="analog_in_1" />
+                <channel name="linearIn1" wire="analog_in_1" scaleB="2" scaleC="10"/>
+                <channel name="logIn1" wire="analog_in_1" log="true" />
+                <channel name="bothScaled" wire="analog_in_1" scaleB="2" scaleC="10" log="true"/>
+                <channel name="analogIn2" wire="analog_in_2" />
+                <channel name="analogOut1" wire="analog_out_1" />
+                <channel name="analogOut2" wire="analog_out_2" />
+                <channel name="digitalIn1" wire="digital_in_1" />
+                <channel name="digitalIn2" wire="digital_in_2" />
+                <channel name="digitalIn3" wire="digital_in_3" />
+                <channel name="digitalIn4" wire="digital_in_4" />
+                <channel name="digitalOut1" wire="digital_out_1" />
+                <channel name="digitalOut2" wire="digital_out_2" />
+                <channel name="digitalOut3" wire="digital_out_3" />
+                <channel name="digitalOut4" wire="digital_out_4" />
+              </channels>
+            </board>
+          </boards>
+        </loop>
+      </loops>
+    </loopcontroller>
+  </loopcontrollers>
+  <interpreter>
+    <devices>
+      <epicscas type="epicscas" name="epicsserver" />
+    </devices>
+  </interpreter>
+</system>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<system a500updaterate="50" xmlns="http://www.ptcusa.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ptcusa.com A510.xsd"
+  type="pyramid">
+  <hosts>
+    <!-- NOTE: the ip address does not matter for bcs, but may be required to be present -->
+    <host ip="192.168.100.135" name="wnett" localhost="true" />
+  </hosts>
+  <loopcontrollers>
+  </loopcontrollers>
+  <interpreter>
+    <devices>
+      <epicscas type="epicscas" name="epicsserver" />
+
+      <memblock type="memblock" name="tcttest" size="20">
+        <channels>
+          <channel name="c_test1" wire="analog_out_1" />
+          <channel name="newtest" wire="analog_out_2" init='75.00' />
+          <channel name="c_test2" wire="analog_out_3" />
+        </channels>
+      </memblock>
+
+      <supply name="psu_control" type="supply" tags="accel">
+				<pipes>
+					<pipe source="r_psu_current" wire="analog_out_current_readback"/>
+					<pipe wire="analog_in_current_setpoint" destination="c_psu_current"/>
+					<pipe source="r_psu_voltage" wire="analog_out_voltage_readback"/>
+					<pipe wire="analog_in_voltage_setpoint" destination="c_psu_voltage"/>
+				</pipes>
+				<channels>
+					<!--<channel name="r_psu_control_{name}_current" wire="analog_in_current_setpoint" units="A" />-->
+					<channel name="c_psu_control_current" wire="analog_out_current_setpoint" units="A" init="0"/>
+					<!--<channel name="r_psu_control_{name}_voltage" wire="analog_in_voltage_setpoint" units="V" />-->
+					<channel name="c_psu_control_voltage" wire="analog_out_voltage_setpoint" units="V" init="0"/>
+					<channel name="c_psu_enable" wire="digital_out_enable"/>
+					<channel name="r_psu_enable" wire="digital_in_enable"/> 
+					<channel name="r_psu_fault" wire="digital_in_fault"/>
+					<channel name="r_psu_fault_message" wire="string_in_fault_message"/>
+					<channel name="r_psu_pwm_demand" wire="analog_out_pwm_demand" units="V"/>
+					<channel name="r_psu_acc_output" wire="analog_out_acc_output" units="V"/>
+					<channel name="r_psu_temperature" wire="analog_out_temperature" units="C"/>
+					<channel name="c_mux_0" wire="digital_out_mux_0" />
+					<channel name="c_mux_1" wire="digital_out_mux_1" />
+					<channel name="c_mux_2" wire="digital_out_mux_2" />
+					<channel name="c_mux_3" wire="digital_out_mux_3" />
+				</channels>
+			</supply>
+			<psu_sim name="psu" type="psu_sim" tags="accel">
+				<channels>
+					 
+					<channel name="c_psu_resistance" wire="analog_out_resistance" init="1000.0" units="ohm"/>
+					<channel name="r_psu_current" wire="analog_in_current_readback" units="A"/>
+					<channel name="c_psu_current" wire="analog_out_current_setpoint" units="A" init="0"/>
+					<channel name="c_psu_current_alpha" wire="analog_out_current_alpha" init="0.5"/>
+					<channel name="r_psu_voltage" wire="analog_in_voltage_readback" units="V"/>
+					<channel name="c_psu_voltage" wire="analog_out_voltage_setpoint" units="V" init="0"/>
+					<channel name="c_psu_voltage_alpha" wire="analog_out_voltage_alpha" init="0.5"/>
+				</channels>
+			</psu_sim>
+    </devices>
+  </interpreter>
+</system>
